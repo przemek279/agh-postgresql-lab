@@ -1,0 +1,9 @@
+SET
+Output format is unaligned.
+Field separator is ",".
+Tuples only is on.
+42,107,96
+50,102,105
+60,105,110
+69,102,106
+74,109,106
