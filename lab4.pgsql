@@ -196,4 +196,20 @@ JOIN czekoladki c USING(idczekoladki)
 where c.nadzienie is NULL;
 
 -- 4.6 
--- Do zrobienia 
+
+SELECT c.idczekoladki, c.nazwa, c.koszt FROM czekoladki c
+JOIN czekoladki c1 ON c.koszt > c1.koszt 
+AND c1.idczekoladki = 'd08';
+
+
+SELECT DISTINCT k.nazwa FROM klienci k
+JOIN zamowienia z USING(idklienta)
+JOIN artykuly a USING(idzamowienia)
+JOIN pudelka p USING(idpudelka)
+JOIN
+(klienci k1 JOIN zamowienia z1 USING(idklienta)
+JOIN artykuly a1 USING(idzamowienia)
+JOIN pudelka p1 USING(idpudelka))
+ON p.idpudelka = p1.idpudelka 
+AND k1.nazwa = 'Górka Alicja';
+
