@@ -213,3 +213,14 @@ JOIN pudelka p1 USING(idpudelka))
 ON p.idpudelka = p1.idpudelka 
 AND k1.nazwa = 'Górka Alicja';
 
+
+SELECT DISTINCT k.nazwa, k.miejscowosc FROM klienci k
+JOIN zamowienia z USING(idklienta)
+JOIN artykuly a USING(idzamowienia)
+JOIN pudelka p USING(idpudelka)
+JOIN
+(klienci k1 JOIN zamowienia z1 USING(idklienta)
+JOIN artykuly a1 USING(idzamowienia)
+JOIN pudelka p1 USING(idpudelka))
+ON p.idpudelka = p1.idpudelka 
+AND k1.miejscowosc = 'Katowice';
