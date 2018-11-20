@@ -57,10 +57,6 @@ LIMIT 1;
 SELECT sum(z.sztuk * c.masa) / count(DISTINCT p.idpudelka) FROM zawartosc z
 JOIN pudelka p USING(idpudelka)
 JOIN czekoladki c USING(idczekoladki);
--- ORR Nie wiem które  dobre
-SELECT avg(z.sztuk * c.masa) FROM zawartosc z
-JOIN pudelka p USING(idpudelka)
-JOIN czekoladki c USING(idczekoladki);
 
 
 SELECT p.nazwa, sum(z.sztuk * c.masa) / sum(z.sztuk) FROM zawartosc z
@@ -167,3 +163,28 @@ JOIN zawartosc z USING(idczekoladki)
 JOIN pudelka p USING(idpudelka)
 GROUP BY p.idpudelka;
 
+
+
+SELECT  sum(Zysk.zysk * a.sztuk) FROM artykuly a
+JOIN (
+    SELECT p.idpudelka, p.cena - sum(c.koszt * z.sztuk) AS zysk
+    FROM    pudelka p
+            JOIN zawartosc z USING(idpudelka)
+            JOIN czekoladki c USING(idczekoladki)
+    GROUP BY p.idpudelka
+) AS Zysk USING(idpudelka);
+
+
+SELECT SUM(Zysk.zysk)
+FROM (
+    SELECT (p.cena - sum(c.koszt * z.sztuk)) * p.stan AS zysk
+    FROM    pudelka p
+            JOIN zawartosc z USING(idpudelka)
+            JOIN czekoladki c USING(idczekoladki)
+    GROUP BY p.idpudelka
+) AS Zysk;
+
+
+-- 5.8
+
+SELECT row_number() OVER (ORDER BY idpudelka), idpudelka FROM pudelka;
